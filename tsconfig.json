@@ -1,0 +1,21 @@
+{
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "compilerOptions": {
+    "types": ["jest", "node"],
+    "target": "ES6",
+    "module": "commonjs",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "paths": {
+      "@/*": ["src/*"],
+      "@types/*": ["node_modules/@types/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
