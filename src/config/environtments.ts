@@ -11,9 +11,15 @@ export const env = {
     CORS_ORIGIN: process.env.CORS_ORIGIN as string,
     // jwt
     JWT_SECRET: process.env.JWT_SECRET as string,
-    // database
+    // mongodb
     MONGO_URL: process.env.MONGO_URL as string,
     MONGO_DB: process.env.MONGO_DB as string,
+    // redis
+    REDIS_HOST: process.env.REDIS_HOST as string,
+    REDIS_PORT: Number(process.env.REDIS_PORT),
+    REDIS_USERNAME: process.env.REDIS_USERNAME as string,
+    REDIS_PASSWORD: process.env.REDIS_PASSWORD as string,
+    REDIS_DB: Number(process.env.REDIS_DB),
     // mailer
     MAILER_HOST: process.env.MAILER_HOST,
     MAILER_PORT: Number(process.env.MAILER_PORT),

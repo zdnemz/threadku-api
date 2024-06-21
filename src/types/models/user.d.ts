@@ -27,7 +27,7 @@ export interface Profile {
  * @property {Profile} profile - user's profile data
  * @property {Date} created_at - date when user was created
  * @property {Date} updated_at - date when user was last updated
- * 
+ *
  * @function comparePassword - compare user's password with hashed password
  * @function loginAttempts - increment user's login attempts
  */

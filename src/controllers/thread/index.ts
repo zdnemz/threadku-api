@@ -1,16 +1,15 @@
 import {
-  collectService,
   createService,
   deleteByIdService,
   getByIdService,
   getMeService,
   likeService,
-  uncollectService,
   unlikeService,
-} from "@/services/post";
+  updateByIdService,
+} from "@/services/thread";
 import type { IFunction } from "@/types";
 import { validate } from "@/utils";
-import { createPostSchema } from "@/validations/post";
+import { createPostSchema } from "@/validations/thread";
 
 export const getById: IFunction = async (req, res, next) => {
   try {
@@ -42,6 +41,14 @@ export const create: IFunction = async (req, res, next) => {
   }
 };
 
+export const updateById: IFunction = async (req, res, next) => {
+  try {
+    await updateByIdService(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteById: IFunction = async (req, res, next) => {
   try {
     await deleteByIdService(req, res, next);
@@ -61,22 +68,6 @@ export const like: IFunction = async (req, res, next) => {
 export const unlike: IFunction = async (req, res, next) => {
   try {
     await unlikeService(req, res, next);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const collect: IFunction = async (req, res, next) => {
-  try {
-    await collectService(req, res, next);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const uncollect: IFunction = async (req, res, next) => {
-  try {
-    await uncollectService(req, res, next);
   } catch (error) {
     next(error);
   }

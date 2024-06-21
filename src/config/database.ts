@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import { env } from "./environtments";
 import { logger } from "@/utils";
+import { Redis } from "ioredis";
 
-export const connectDatabase = async () => {
+export const connectMongoDb = async () => {
   try {
     const { MONGO_URL } = env;
     await mongoose.connect(MONGO_URL, {
@@ -15,7 +16,7 @@ export const connectDatabase = async () => {
   }
 };
 
-export const disconnectDatabase = async () => {
+export const disconnectMongoDb = async () => {
   try {
     await mongoose.disconnect();
     // logger.info("Database disconnected");
@@ -24,3 +25,11 @@ export const disconnectDatabase = async () => {
     process.exit(1);
   }
 };
+
+export const redis = new Redis({
+  host: env.REDIS_HOST,
+  port: env.REDIS_PORT,
+  username: env.REDIS_USERNAME,
+  password: env.REDIS_PASSWORD,
+  db: env.REDIS_DB,
+});

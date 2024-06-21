@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Joi from "joi";
 import type { Request, Response } from "express";
 import { responseError } from "./response";

@@ -57,7 +57,7 @@ export const getMeService: IFunction = async (req, res, next) => {
   try {
     const { _id: user_id } = req.user!;
 
-    const user = await User.findById(user_id).select("-password -role");
+    const user = await User.findById(user_id);
     if (!user) {
       return res
         .status(404)
@@ -74,7 +74,9 @@ export const getByUsernameService: IFunction = async (req, res, next) => {
   try {
     const { username } = req.params;
 
-    const user = await User.findOne({ username }).select("id username profile");
+    const user = await User.findOne({ username }).select(
+      "id username name profile"
+    );
     if (!user) {
       return res
         .status(404)

@@ -2,6 +2,7 @@ const statusCodes = {
   success: {
     200: "OK",
     201: "Created",
+    204: "No Content",
   },
   error: {
     400: "Bad Request",

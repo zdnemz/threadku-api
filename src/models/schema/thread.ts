@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
-import type { IPost } from "@/types/models";
+import type { IThread } from "@/types/models";
 
-export const postSchema = new mongoose.Schema<IPost>({
+function arrayLimit(val: string[]) {
+  return val.length <= 4;
+}
+
+export const threadSchema = new mongoose.Schema<IThread>({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -13,26 +17,14 @@ export const postSchema = new mongoose.Schema<IPost>({
   },
   medias: {
     type: [String],
-    max: 4,
+    validate: [arrayLimit, "Max 4 medias allowed"],
   },
-  hastags: [String],
+  hashtags: [String],
   comments_count: {
     type: Number,
     default: 0,
   },
-  likes: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "User",
-  },
   likes_count: {
-    type: Number,
-    default: 0,
-  },
-  collections: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "Collection",
-  },
-  collections_count: {
     type: Number,
     default: 0,
   },

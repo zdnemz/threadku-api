@@ -3,7 +3,7 @@ import { userSchema } from "../schema/user";
 import bcrypt from "bcrypt";
 
 const MAX_LOGIN_ATTEMPTS = 5;
-const LOCK_TIME = 60 * 60 * 1000; // 1 hour
+const LOCK_TIME = 15 * 60 * 1000; // 15 minutes
 
 userSchema.virtual("is_locked").get(function (this: IUser) {
   return !!(this.locked_until && this.locked_until > new Date(Date.now()));

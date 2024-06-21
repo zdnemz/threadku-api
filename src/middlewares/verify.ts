@@ -1,7 +1,5 @@
-import { env } from "@/config";
 import { IFunction, Decoded } from "@/types";
-import { responseError } from "@/utils";
-import jwt from "jsonwebtoken";
+import { jwtVerify, responseError } from "@/utils";
 
 export const verify: IFunction = async (req, res, next) => {
   try {
@@ -11,7 +9,7 @@ export const verify: IFunction = async (req, res, next) => {
       return res.status(401).json(responseError(401));
     }
 
-    const decoded = jwt.verify(accessToken, env.JWT_SECRET!);
+    const decoded = jwtVerify(accessToken);
 
     if (!decoded) {
       return res.status(401).json(responseError(401));

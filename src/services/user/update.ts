@@ -172,7 +172,7 @@ export const passwordService: IFunction = async (req, res, next) => {
 
     await user.save();
 
-    return res.status(200).json(responseSuccess(200));
+    return res.status(204).json(responseSuccess(204));
   } catch (error) {
     next(error);
   }

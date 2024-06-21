@@ -1,28 +1,21 @@
 import mongoose from "mongoose";
-import type { IComment } from "@/types/models";
+import { ILike } from "@/types/models";
 
-export const commentSchema = new mongoose.Schema<IComment>({
-  post_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Post",
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-  author: {
+export const likeSchema = new mongoose.Schema<ILike>({
+  user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  parent_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Comment",
+  type: {
+    type: String,
+    enum: ["thread", "comment"],
+    required: true,
   },
-  likes_count: {
-    type: Number,
-    default: 0,
+  entity_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    refPath: "type",
+    required: true,
   },
   created_at: {
     type: Date,

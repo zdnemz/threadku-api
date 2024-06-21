@@ -36,18 +36,22 @@ export const userSchema = new mongoose.Schema<IUser>({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   login_attempts: {
     type: Number,
     default: 0,
+    select: false,
   },
   locked_until: {
     type: Date,
+    select: false,
   },
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
+    select: false,
   },
   profile: {
     type: profileSchema,
