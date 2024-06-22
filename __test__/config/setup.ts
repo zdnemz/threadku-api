@@ -3,6 +3,7 @@ import { models, utils, config } from ".";
 import type { Models } from "../types";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
+import { redis } from "../../src/config";
 
 export const connectDb = async () => {
   try {
@@ -17,6 +18,7 @@ export const connectDb = async () => {
 export const disconnectDb = async () => {
   try {
     await mongoose.disconnect();
+    await redis.quit();
   } catch (error) {
     utils.logger.error(error);
   }

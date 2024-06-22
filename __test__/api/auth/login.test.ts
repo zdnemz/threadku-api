@@ -17,35 +17,35 @@ describe("PUT /api/auth/login", () => {
     await setup.disconnectDb();
   });
 
-  it("should return 200 OK if login with email", async () => {
+  it("should return 204 OK if login with email", async () => {
     const response = await request.post("/api/auth/login").send({
       email: user?.email,
       password: "testpassword",
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(204);
     expect(response.headers["set-cookie"]).toBeTruthy();
     expect(response.headers["set-cookie"][0]).toContain("accessToken");
     expect(response.body.success).toBe(true);
-    expect(response.body.code).toBe(200);
-    expect(response.body.message).toBe("OK");
+    expect(response.body.code).toBe(204);
+    expect(response.body.message).toBe("No Content");
   });
 
-  it("should return 200 OK if login with username", async () => {
+  it("should return 204 OK if login with username", async () => {
     const response = await request.post("/api/auth/login").send({
       username: user?.username,
       password: "testpassword",
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(204);
     expect(response.headers["set-cookie"]).toBeTruthy();
     expect(response.headers["set-cookie"][0]).toContain("accessToken");
     expect(response.body.success).toBe(true);
-    expect(response.body.code).toBe(200);
-    expect(response.body.message).toBe("OK");
+    expect(response.body.code).toBe(204);
+    expect(response.body.message).toBe("No Content");
   });
 
-  it("should return 401 Bad Request if missing required fields", async () => {
+  it("should return 400 Bad Request if missing required fields", async () => {
     const response = await request.post("/api/auth/login").send({
       username: user?.username,
     });
@@ -57,7 +57,7 @@ describe("PUT /api/auth/login", () => {
     expect(response.body.data.details).toBeDefined();
   });
 
-  it("should return 400 Unauthorized if password is incorrect", async () => {
+  it("should return 401 Unauthorized if password is incorrect", async () => {
     const response = await request.post("/api/auth/login").send({
       username: user?.username,
       password: "wrongpassword",

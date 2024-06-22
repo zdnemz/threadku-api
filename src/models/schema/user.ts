@@ -66,3 +66,4 @@ export const userSchema = new mongoose.Schema<IUser>({
     default: Date.now,
   },
 });
+

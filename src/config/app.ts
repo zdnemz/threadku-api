@@ -4,7 +4,7 @@ import cookieparser from "cookie-parser";
 import { env } from "@/config";
 import { error } from "@/middlewares";
 import router from "@/routes";
-import { responseError, responseSuccess } from "@/utils";
+import { limiter, responseError, responseSuccess } from "@/utils";
 
 export const app = express();
 
@@ -19,6 +19,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/uploads"));
 app.use(cookieparser());
+app.use(limiter);
 
 // health check
 app.get("/api/health", async (req, res) => {

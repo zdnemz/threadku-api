@@ -1,15 +1,17 @@
-import type { IUser } from "@/types/models";
 import { userSchema } from "../schema/user";
 import bcrypt from "bcrypt";
 
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 15 * 60 * 1000; // 15 minutes
 
-userSchema.virtual("is_locked").get(function (this: IUser) {
+userSchema.index({ username: 1 });
+userSchema.index({ email: 1 });
+
+userSchema.virtual("is_locked").get(function () {
   return !!(this.locked_until && this.locked_until > new Date(Date.now()));
 });
 
-userSchema.methods.loginAttempts = async function (this: IUser): Promise<void> {
+userSchema.methods.loginAttempts = async function (): Promise<void> {
   if (this.locked_until && this.locked_until < new Date(Date.now())) {
     await this.updateOne({
       $set: { login_attempts: 1 },
@@ -28,7 +30,6 @@ userSchema.methods.loginAttempts = async function (this: IUser): Promise<void> {
 };
 
 userSchema.methods.comparePassword = async function (
-  this: IUser,
   candidatePassword: string
 ): Promise<boolean> {
   const compared = await bcrypt.compare(candidatePassword, this.password);

@@ -26,7 +26,6 @@ describe("PUT /api/users/me", () => {
       .get("/api/users/me")
       .set("Cookie", `accessToken=${accessToken}`);
 
-    console.log(response.error);
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
     expect(response.body.code).toBe(200);

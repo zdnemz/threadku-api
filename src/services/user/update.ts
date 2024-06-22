@@ -1,6 +1,6 @@
 import { User } from "@/models";
 import type { IFunction } from "@/types";
-import { logger, responseError, responseSuccess } from "@/utils";
+import { responseError, responseSuccess } from "@/utils";
 import fs from "fs";
 import { promisify } from "util";
 import bcrypt from "bcrypt";
@@ -24,7 +24,7 @@ export const usernameService: IFunction = async (req, res, next) => {
       _id,
       { username: req.body.username },
       { new: true }
-    ).select("username");
+    );
 
     if (!user) {
       return res
@@ -48,7 +48,7 @@ export const profileService: IFunction = async (req, res, next) => {
         profile: req.body,
       },
       { new: true }
-    ).select("profile");
+    );
     if (!user) {
       return res
         .status(404)
@@ -67,7 +67,7 @@ export const uploadAvatarService: IFunction = async (req, res, next) => {
       return res
         .status(400)
         .json(responseError(400, { details: "avatar is required" }));
-    }    
+    }
 
     const convertedFile = await processImage({
       buffer: req.file.buffer,
@@ -85,7 +85,7 @@ export const uploadAvatarService: IFunction = async (req, res, next) => {
         },
       },
       { new: true }
-    ).select("profile");
+    );
     if (!user) {
       return res
         .status(404)
@@ -109,8 +109,8 @@ export const deleteAvatarService: IFunction = async (req, res, next) => {
           avatar: null,
         },
       },
-      { new: false }
-    ).select("profile");
+      { new: true }
+    );
 
     if (!user) {
       return res
@@ -118,21 +118,9 @@ export const deleteAvatarService: IFunction = async (req, res, next) => {
         .json(responseError(404, { details: "User not found" }));
     }
 
-    if (user.profile?.avatar) {
-      try {
-        await unlinkAsync(`public/uploads/avatar/${user.profile.avatar}`);
-      } catch (error) {
-        logger.error((error as Error).message);
-      }
+    await unlinkAsync(`public/uploads/avatar/${user.profile.avatar}`);
 
-      user.profile.avatar = null;
-
-      return res.status(200).json(responseSuccess(200, user));
-    }
-
-    return res
-      .status(404)
-      .json(responseError(404, { details: "User not found" }));
+    return res.status(200).json(responseSuccess(200, user));
   } catch (error) {
     next(error);
   }

@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "Me"
+  
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: accessToken
+
+paths:
+  /api/users/me:
+    get:
+      summary: "Get current user information"
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: "User information"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: "User ID"
+                  email:
+                    type: string
+                    description: "User email"
+                  username:
+                    type: string
+                    description: "User username"
+                  profile:
+                    type: object
+                    description: "User profile"
+                    properties:
+                      status:
+                        type: string
+                        description: "User status"
+                        default: active
+                      gender:
+                        type: string
+                        description: "User gender"
+                        default: unknown
+                      avatar:
+                        type: string
+                        description: "User avatar"
+                      bio:
+                        type: string
+                        description: "User bio"
+                  created_at:
+                    type: string
+                    description: "User created at"
+                  updated_at:
+                    type: string
+                    description: "User updated at"
+                  _v:
+                    type: number
+                    description: "User version"
+        401:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 401
+                  message:
+                    type: string
+                    description: Message
+                    default: Unauthorized
+                  data:
+                    type: object
+                    nullable: true
+                    description: Data
+                    default: null
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 500
+                  message:
+                    type: string
+                    description: Message
+                    default: Internal Server Error
+                  data:
+                    type: object
+                    description: Data
+                    properties:
+                      details:
+                        oneOf:
+                          - type: array
+                          - type: string
+                        default: string

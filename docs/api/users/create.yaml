@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: Create User
+  version: 1.0.0
+paths:
+  /api/users/create:
+    post:
+      summary: Create User
+      description: Create User
+      operationId: create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Username
+                email:
+                  type: string
+                  description: Email
+                password:
+                  type: string
+                  description: Password
+              
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: true
+                  code:
+                    type: number
+                    description: Code
+                    default: 201
+                  message:
+                    type: string
+                    description: Message
+                    default: Created
+                  data:
+                    type: object
+                    description: Data
+                    nullable: true
+                    default: null
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 400
+                  message:
+                    type: string
+                    description: Message
+                    default: Bad Request
+                  data:
+                    type: object
+                    description: Data
+                    properties:
+                      details:
+                        oneOf:
+                          - type: array
+                          - type: string
+                        default: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 500
+                  message:
+                    type: string
+                    description: Message
+                    default: Internal Server Error
+                  data:
+                    type: object
+                    description: Data
+                    properties:
+                      details:
+                        oneOf:
+                          - type: array
+                          - type: string
+                        default: string

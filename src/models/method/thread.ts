@@ -3,7 +3,7 @@ import { threadSchema } from "../schema/thread";
 import mongoose from "mongoose";
 import { Collection, Like } from "..";
 
-threadSchema.methods.isLiked = async function (this: IThread, user_id: string) {
+threadSchema.method("isLiked", async function (this: IThread, user_id: string) {
   const id = new mongoose.Types.ObjectId(user_id);
 
   const liked = await Like.findOne({
@@ -13,9 +13,9 @@ threadSchema.methods.isLiked = async function (this: IThread, user_id: string) {
   });
 
   return !!liked;
-};
+});
 
-threadSchema.methods.isCollected = async function (
+threadSchema.method("isCollected", async function (
   this: IThread,
   user_id: string
 ) {
@@ -27,6 +27,6 @@ threadSchema.methods.isCollected = async function (
   });
 
   return !!collected;
-};
+});
 
 export default threadSchema;

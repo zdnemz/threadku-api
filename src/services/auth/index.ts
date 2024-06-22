@@ -14,23 +14,9 @@ export const loginService: IFunction = async (req, res, next) => {
         })
       );
     }
-    const user = await User.findOne({ $or: [{ email }, { username }] });
+    const user = await User.findOne({ $or: [{ email }, { username }] }).select("+password +is_locked +locked_until +login_attempts");
 
     if (!user) {
-      return res
-        .status(401)
-        .json(responseError(401, { details: `${email ? "Email" : "Username"} or password is incorrect` }));
-    }
-
-    if (user.is_locked) {
-      return res.status(403).json(
-        responseError(403, {
-          details: "Your account has been locked until " + new Date(user.locked_until).toLocaleString(),
-        })
-      );
-    }
-
-    if (await user.comparePassword(password)) {
       return res.status(401).json(
         responseError(401, {
           details: `${email ? "Email" : "Username"} or password is incorrect`,
@@ -38,6 +24,23 @@ export const loginService: IFunction = async (req, res, next) => {
       );
     }
 
+    if (user.is_locked) {
+      return res.status(403).json(
+        responseError(403, {
+          details:
+            "Your account has been locked until " +
+            new Date(user.locked_until).toLocaleString(),
+        })
+      );
+    }
+
+    if (!(await user.comparePassword(password))) {
+      return res.status(401).json(
+        responseError(401, {
+          details: `${email ? "Email" : "Username"} or password is incorrect`,
+        })
+      );
+    }
 
     const token = jwtSign(
       { _id: user.id, username: user.username, email: user.email },
