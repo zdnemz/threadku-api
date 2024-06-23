@@ -21,7 +21,7 @@ describe("PUT /api/auth/logout", () => {
     await setup.disconnectDb();
   });
 
-  it("should return 204 OK", async () => {
+  it("should return 200 OK", async () => {
     const response = await request
       .delete("/api/auth/logout")
       .set("Cookie", [`accessToken=${accessToken}`]);
@@ -31,14 +31,14 @@ describe("PUT /api/auth/logout", () => {
       cookie.startsWith("accessToken=")
     );
 
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
     expect(accessTokenCookie).toBeDefined();
     expect(
       accessTokenCookie?.includes("Expires=Thu, 01 Jan 1970 00:00:00 GMT")
     ).toBe(true);
     expect(response.body.success).toBe(true);
-    expect(response.body.code).toBe(204);
-    expect(response.body.message).toBe("No Content");
+    expect(response.body.code).toBe(200);
+    expect(response.body.message).toBe("OK");
   });
 
   it("should return 401 Unauthorized if access token is missing", async () => {

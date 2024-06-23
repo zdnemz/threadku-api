@@ -41,6 +41,9 @@ export const createUser = async () => {
 export const deleteUser = async () => {
   try {
     await models.User.deleteMany({ email: { $regex: "@test.com$" } });
+    await redis.keys("accessToken:*-userId:*").then((keys) => {
+      redis.del(...keys);
+    });
   } catch (error) {
     utils.logger.error(error);
   }

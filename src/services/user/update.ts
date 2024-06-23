@@ -1,10 +1,11 @@
 import { User } from "@/models";
 import type { IFunction } from "@/types";
-import { responseError, responseSuccess } from "@/utils";
+import { jwtSign, responseError, responseSuccess } from "@/utils";
 import fs from "fs";
 import { promisify } from "util";
 import bcrypt from "bcrypt";
 import { processImage } from "@/utils/imageprocessor";
+import { env } from "@/config";
 
 const unlinkAsync = promisify(fs.unlink);
 
@@ -160,7 +161,21 @@ export const passwordService: IFunction = async (req, res, next) => {
 
     await user.save();
 
-    return res.status(204).json(responseSuccess(204));
+    const token = jwtSign(
+      { _id: user.id, username: user.username, email: user.email },
+      {
+        expiresIn: "7d",
+      }
+    );
+
+    res.cookie("accessToken", token, {
+      httpOnly: true,
+      secure: env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json(responseSuccess(200));
   } catch (error) {
     next(error);
   }

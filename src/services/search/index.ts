@@ -31,7 +31,7 @@ export const userService: IFunction = async (req, res, next) => {
       .skip(10 * (Number(page || 1) - 1))
       .limit(10);
 
-    await redis.set(redisKey, JSON.stringify(users));
+    await redis.set(redisKey, JSON.stringify(users), "EX", 60 * 60 * 1); // 1 hour
 
     return res.status(200).json(responseSuccess(200, users));
   } catch (error) {
@@ -65,7 +65,7 @@ export const threadService: IFunction = async (req, res, next) => {
       .skip(10 * (Number(page) - 1))
       .limit(10);
 
-    await redis.set(redisKey, JSON.stringify(threads));
+    await redis.set(redisKey, JSON.stringify(threads), "EX", 60 * 60 * 1); // 1 hour
 
     return res.status(200).json(responseSuccess(200, threads));
   } catch (error) {

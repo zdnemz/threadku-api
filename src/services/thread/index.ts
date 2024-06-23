@@ -140,7 +140,7 @@ export const updateByIdService: IFunction = async (req, res, next) => {
         .json(responseError(404, { details: "thread not found" }));
     }
 
-    return res.status(204).json(responseSuccess(204));
+    return res.status(200).json(responseSuccess(200));
   } catch (error) {
     next(error);
   }
@@ -166,7 +166,7 @@ export const deleteByIdService: IFunction = async (req, res, next) => {
         .json(responseError(404, { details: "thread not found" }));
     }
 
-    return res.status(204).json(responseSuccess(204));
+    return res.status(200).json(responseSuccess(200));
   } catch (error) {
     next(error);
   }
@@ -209,7 +209,7 @@ export const likeService: IFunction = async (req, res, next) => {
         .json(responseError(500, { details: "failed to like thread" }));
     }
 
-    return res.status(204).json(responseSuccess(204));
+    return res.status(200).json(responseSuccess(200));
   } catch (error) {
     next(error);
   }
@@ -237,7 +237,7 @@ export const unlikeService: IFunction = async (req, res, next) => {
 
     await Like.deleteOne({ user_id, type: "thread", entity_id: thread_id });
 
-    return res.status(204).json(responseSuccess(204));
+    return res.status(200).json(responseSuccess(200));
   } catch (error) {
     next(error);
   }

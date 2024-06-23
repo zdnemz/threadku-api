@@ -8,7 +8,7 @@ export const env = {
     APP_PORT: Number(process.env.APP_PORT),
     APP_HOST: process.env.APP_HOST as string,
     // cors
-    CORS_ORIGIN: process.env.CORS_ORIGIN as string,
+    CORS_ORIGIN: process.env.CORS_ORIGIN as string || "*",
     // jwt
     JWT_SECRET: process.env.JWT_SECRET as string,
     // mongodb

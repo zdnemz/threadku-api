@@ -1,0 +1,115 @@
+openapi: 3.0.0
+
+info:
+  title: Get Thread By Id
+  description: Get Thread By thread Id
+  version: 1.0.0
+
+paths:
+  /threads/{thread_id}:
+    get:
+      summary: "Get Thread By thread Id"
+      parameters:
+        - in: path
+          name: thread_id
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: "Get Thread By thread Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Thread"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 400
+                  message:
+                    type: string
+                    description: Message
+                    default: Bad Request
+                  data:
+                    type: object
+                    description: Data
+                    default: null
+
+        "404":
+          description: "Not Found"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 404
+                  message:
+                    type: string
+                    description: Message
+                    default: Not Found
+                  data:
+                    type: object
+                    description: Data
+                    default: null
+          
+components:
+  schemas:
+    Thread:
+      type: object
+      properties:
+        _id:
+          type: string
+        author:
+          type: string
+        content:
+          type: string
+        medias:
+          type: array
+        hashtags:
+          type: array
+        comments_count:
+          type: number
+        likes_count:
+          type: number
+        is_private:
+          type: boolean
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        is_liked: 
+          type: boolean
+        is_collected:
+          type: boolean
+      
+      example:
+        _id: 1
+        author: 1
+        content: "test thread"
+        medias: []
+        hashtags: []
+        comments_count: 0
+        likes_count: 0
+        is_private: false
+        created_at: 2022-08-18T08:15:48.000Z
+        updated_at: 2022-08-18T08:15:48.000Z
+        is_liked: false
+        is_collected: false

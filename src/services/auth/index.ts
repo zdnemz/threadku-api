@@ -14,7 +14,9 @@ export const loginService: IFunction = async (req, res, next) => {
         })
       );
     }
-    const user = await User.findOne({ $or: [{ email }, { username }] }).select("+password +is_locked +locked_until +login_attempts");
+    const user = await User.findOne({ $or: [{ email }, { username }] }).select(
+      "+password +is_locked +locked_until +login_attempts"
+    );
 
     if (!user) {
       return res.status(401).json(
@@ -56,7 +58,7 @@ export const loginService: IFunction = async (req, res, next) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(204).json(responseSuccess(204));
+    return res.status(200).json(responseSuccess(200));
   } catch (error) {
     next(error);
   }
@@ -65,7 +67,7 @@ export const loginService: IFunction = async (req, res, next) => {
 export const logoutService: IFunction = async (req, res, next) => {
   try {
     res.clearCookie("accessToken");
-    return res.status(204).json(responseSuccess(204));
+    return res.status(200).json(responseSuccess(200));
   } catch (error) {
     next(error);
   }

@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: Get user by user name
+  description: Get user by ID
+  version: 1.0.0
+  
+paths:
+  /users/{username}:
+    get:
+      summary: Get user by user name
+      operationId: getUserByName
+      tags:
+        - users
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be fetched. Use user1 for testing.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+               schema:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: "User ID"
+                  username:
+                    type: string
+                    description: "User username"
+                  profile:
+                    type: object
+                    description: "User profile"
+                    properties:
+                      status:
+                        type: string
+                        description: "User status"
+                        default: active
+                      gender:
+                        type: string
+                        description: "User gender"
+                        default: unknown
+                      avatar:
+                        type: string
+                        description: "User avatar"
+                      bio:
+                        type: string
+                        description: "User bio"
+                  created_at:
+                    type: string
+                    description: "User created at"
+                  updated_at:
+                    type: string
+                    description: "User updated at"
+                  _v:
+                    type: number
+                    description: "User version"
+        401:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 401
+                  message:
+                    type: string
+                    description: Message
+                    default: Unauthorized
+                  data:
+                    type: object
+                    nullable: true
+                    description: Data
+                    default: null
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Success
+                    default: false
+                  code:
+                    type: number
+                    description: Code
+                    default: 500
+                  message:
+                    type: string
+                    description: Message
+                    default: Internal Server Error
+                  data:
+                    type: object
+                    description: Data
+                    properties:
+                      details:
+                        oneOf:
+                          - type: array
+                          - type: string
+                        default: string

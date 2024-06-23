@@ -1,14 +1,24 @@
 openapi: 3.0.0
 info:
-  title: Create User
-  description: Create User
+  title: Update user profile
+  description: Update user profile
   version: 1.0.0
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: accessToken
+
 paths:
-  /api/users/create:
-    post:
-      summary: Create User
-      description: Create User
-      operationId: create
+  /api/users/update/profile:
+    put:
+      summary: Update user profile
+      operationId: updateProfile
+      security:
+        - cookieAuth: []
+
       requestBody:
         required: true
         content:
@@ -16,42 +26,58 @@ paths:
             schema:
               type: object
               properties:
-                username:
+                name:
                   type: string
-                  description: Username
-                email:
+                bio:
                   type: string
-                  description: Email
-                password:
+                gender:
                   type: string
-                  description: Password
-              
+                  enum:
+                    - male
+                    - female
+                    - unknown
       responses:
-        '201':
-          description: Created
+        '200':
+          description: successful operation
           content:
             application/json:
-              schema:
+               schema:
                 type: object
                 properties:
-                  success:
-                    type: boolean
-                    description: Success
-                    default: true
-                  code:
-                    type: number
-                    description: Code
-                    default: 201
-                  message:
+                  _id:
                     type: string
-                    description: Message
-                    default: Created
-                  data:
+                    description: "User ID"
+                  username:
+                    type: string
+                    description: "User username"
+                  profile:
                     type: object
-                    description: Data
-                    nullable: true
-                    default: null
-        '400':
+                    description: "User profile"
+                    properties:
+                      status:
+                        type: string
+                        description: "User status"
+                        default: active
+                      gender:
+                        type: string
+                        description: "User gender"
+                        default: unknown
+                      avatar:
+                        type: string
+                        description: "User avatar"
+                      bio:
+                        type: string
+                        description: "User bio"
+                  created_at:
+                    type: string
+                    description: "User created at"
+                  updated_at:
+                    type: string
+                    description: "User updated at"
+                  _v:
+                    type: number
+                    description: "User version"
+        401:
           description: Bad Request
           content:
             application/json:
@@ -65,21 +91,17 @@ paths:
                   code:
                     type: number
                     description: Code
-                    default: 400
+                    default: 401
                   message:
                     type: string
                     description: Message
-                    default: Bad Request
+                    default: Unauthorized
                   data:
                     type: object
+                    nullable: true
                     description: Data
-                    properties:
-                      details:
-                        oneOf:
-                          - type: array
-                          - type: string
-                        default: string
-        '500':
+                    default: null
+        500:
           description: Internal Server Error
           content:
             application/json:

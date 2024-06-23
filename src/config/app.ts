@@ -9,6 +9,7 @@ import { limiter, responseError, responseSuccess } from "@/utils";
 export const app = express();
 
 app.use(express.json());
+app.use(limiter);
 app.use(
   cors({
     origin: env.CORS_ORIGIN,
@@ -19,7 +20,6 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public/uploads"));
 app.use(cookieparser());
-app.use(limiter);
 
 // health check
 app.get("/api/health", async (req, res) => {

@@ -1,4 +1,5 @@
 import { utils } from ".";
+import { redis } from "../../src/config";
 import type { Models } from "../types";
 
 export const token = (user: Models.IUser) => {
@@ -13,5 +14,7 @@ export const token = (user: Models.IUser) => {
     }
   );
 
+  redis.set(`accessToken:${accessToken}-userId:${user._id}`, "valid", "EX", 60 * 5);
+  
   return accessToken;
 };
