@@ -1,58 +1,90 @@
-# Threadku-API
+# 🚀 Threadku-API: Elevating My Web Development Journey! 🌐
 
-## Overview
+Welcome to Threadku-API, a dynamic social media-inspired platform designed to master and showcase modern web development technologies.
 
-Threadku-API is a dummy project crafted to sharpen programming skills. This API empowers developers to perform CRUD operations and search functionalities on users, threads, comments, likes, collections, and other features typical of social media platforms.
+## Features
 
-## Key Features
+- **CRUD Operations**: Robust CRUD operations for Users, Threads, Comments, Likes, and Collections.
+- **Security**: Advanced security features including data encryption 🔐, rate limiting 🚫, and input validation 🛡️.
 
-- Comprehensive CRUD and search capabilities for:
-  - Users 🧑‍💻
-  - Threads 📜
-  - Comments 💬
-  - Likes ❤️
-  - Collections 📦
-- Additional features include user authentication for secure interactions 🔐.
+## Tech Stack
 
-## Installation
+- **Node.js** & **Express**: For scalable server-side solutions 🚀
+- **TypeScript**: For enhanced codebase reliability 🌟
+- **MongoDB**: Flexible and scalable NoSQL database management 🗄️
+- **Redis**: Efficient caching and messaging 🔄
+- **Docker**: Containerized deployment for seamless scalability 🐳
 
-To run the API locally, follow these steps:
+## Getting Started
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/zdnemz/threadku-api.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd threadku-api
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the server:
-   ```bash
-   npm run dev
-   ```
+### Prerequisites
+
+- Node.js
+- Docker (optional, for containerized deployment)
+- MongoDB
+- Redis
+
+### Installation
+
+1. Clone the repository
+    ```bash
+    git clone https://github.com/zdnemz/threadku-api.git
+    cd threadku-api
+    ```
+
+2. Install dependencies
+    ```bash
+    npm install
+    ```
+
+3. Set up environment variables
+
+    Create a `.env` file in the root directory and add your environment variables. Example:
+
+    ```env
+    # app config
+    NODE_ENV=development
+    APP_PORT=5000
+    APP_HOST=0.0.0.0
+
+    # cors
+    CORS_ORIGIN=http://192.168.100.51:3000
+
+    # jwt
+    JWT_SECRET=supersecretjwtkey
+
+    # mongodb
+    MONGO_URL=mongodb://username:password@localhost:27017
+    MONGO_DB=threadku
+
+    # redis
+    REDIS_HOST=localhost
+    REDIS_PORT=6379
+    REDIS_PASSWORD=supersecretpassword
+    REDIS_DB=0
+    ```
+
+4. Run the application
+    ```bash
+    npm start
+    ```
+
+5. For development mode
+    ```bash
+    npm run dev
+    ```
 
 ## Usage
 
-For detailed usage instructions, please refer to the documentation located in the `docs/api` directory.
-
-## Requirements/Dependencies
-
-- Node.js 🚀
-- Redis 🔄
-- MongoDB 🗄️
-- Docker 🐳 (optional)
+Explore the API endpoints to perform CRUD operations on Users, Threads, Comments, Likes, and Collections. Ensure to handle authentication and authorization as per the security guidelines.
 
 ## Contributing
 
-We welcome contributions from the community. To contribute, fork this repository and submit a pull request with your changes. Please follow common contribution guidelines.
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or new features.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more information.
+This project is licensed under the [MIT License](./LICENSE).
 
 ## Contact
 
@@ -63,7 +95,4 @@ For further inquiries or support, feel free to reach out via the following platf
 [![Twitter - zdanemz](https://img.shields.io/badge/zdnemz-%231DA1F2.svg?style=flat-square&logo=Twitter&logoColor=white)](https://twitter.com/zdanemz)
 [![Instagram - zdnemz](https://img.shields.io/badge/zdnmez-%23E4405F.svg?style=flat-square&logo=Instagram&logoColor=white)](https://instagram.com/zdnemz)
 
-## Additional Documentation
-
-Explore additional documentation resources in the `docs` directory.
-
+Let's push the boundaries of web development! 💡✨
